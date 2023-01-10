@@ -8,6 +8,10 @@ docker run --detach -p 3306:3306 --name mariadb --hostname mariadb --e MARIADB_R
 
 docker run --detach -p 3306:3306 --name mariadb --env MARIADB_USER=mariadb --env MARIADB_PASSWORD=mariadb --env MARIADB_ROOT_PASSWORD=root  mariadb:latest
 
+Cambiar el archivo /usr/local/etc/php.ini-development
+a
+/usr/local/etc/php/php.ini
+
 install mariadb client
 
 sudo apt install mariadb-client
