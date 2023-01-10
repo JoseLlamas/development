@@ -1,9 +1,9 @@
-FROM php:8.2-apache
+FROM php:8.1-apache
 
 LABEL maintainer="Johann Hermine <nikola.tesla.130420@gmail.com>"
 ENV PHP_ERROR_REPORTING E_ALL
 
-ARG DEFAULT_USER=alicia
+ARG DEFAULT_USER=dorian
 
 RUN echo 'nameserver 1.1.1.1' > /etc/resolv.conf
 
@@ -52,7 +52,9 @@ RUN useradd -u 1000 -g ${DEFAULT_USER} \
     --shell=/bin/bash ${DEFAULT_USER}
 
 RUN usermod -aG www-data ${DEFAULT_USER}
-RUN echo 'alicia:lobo@estepario044@alicia' | chpasswd
+RUN echo 'dorian:lobo@estepario044@dorian' | chpasswd
+
+RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 USER ${DEFAULT_USER}
 WORKDIR /home/${DEFAULT_USER}
@@ -68,7 +70,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
         && nvm install --lts --latest-npm \
         && nvm use default
 
-
 ENV NODE_PATH ${NVM_DIR}/v$NODE_VERSION/lib/node_modules
 ENV PATH $NODE_PATH:$PATH:/home/${DEFAULT_USER}/bin
 
@@ -76,7 +77,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --file
 
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
-ENV DENO_INSTALL "/home/alicia/.deno"
+ENV DENO_INSTALL /home/${DEFAULT_USER}/.deno
 ENV PATH ${DENO_INSTALL}/bin:$PATH
 
 RUN /home/${DEFAULT_USER}/bin/composer global require laravel/installer
