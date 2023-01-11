@@ -60,9 +60,9 @@ USER ${DEFAULT_USER}
 WORKDIR /home/${DEFAULT_USER}
 
 RUN mkdir bin
+ENV PATH $PATH:/home/${DEFAULT_USER}/bin
 
 ENV NVM_DIR=/home/${DEFAULT_USER}/.nvm
-
 RUN mkdir -p ${NVM_DIR}
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
         && . ${NVM_DIR}/nvm.sh \
@@ -70,15 +70,12 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
         && nvm install --lts --latest-npm \
         && nvm use default
 
-ENV NODE_PATH ${NVM_DIR}/v$NODE_VERSION/lib/node_modules
-ENV PATH $NODE_PATH:$PATH:/home/${DEFAULT_USER}/bin
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
-
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
 ENV DENO_INSTALL /home/${DEFAULT_USER}/.deno
 ENV PATH ${DENO_INSTALL}/bin:$PATH
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
 
 RUN /home/${DEFAULT_USER}/bin/composer global require laravel/installer
 RUN ln -s /home/${DEFAULT_USER}/.composer/vendor/bin/laravel /home/${DEFAULT_USER}/bin
