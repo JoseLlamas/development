@@ -4,22 +4,19 @@ LABEL maintainer="Johann Hermine <nikola.tesla.130420@gmail.com>"
 ENV PHP_ERROR_REPORTING E_ALL
 
 ARG DEFAULT_USER=dorian
+ARG NODE_VERSION=19.4
 
 RUN echo 'nameserver 1.1.1.1' > /etc/resolv.conf
 
 RUN apt update 
-RUN apt install -y libicu-dev vim curl wget tzdata nano libpq-dev htop youtube-dl \
+RUN apt install -y libicu-dev vim curl wget tzdata nano htop youtube-dl \
 	locales less libaio1 sqlite3 p7zip-full unzip libpng-dev \
 	libmagickwand-dev libmemcached-dev zip unzip libzip-dev libreadline-dev \
 	libmcrypt-dev ffmpeg libonig-dev libcurl4 libcurl4-openssl-dev pkg-config
 
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-configure intl
-
 RUN docker-php-ext-install mysqli 
 RUN docker-php-ext-install pdo_mysql 
-RUN docker-php-ext-install pgsql 
-RUN docker-php-ext-install pdo_pgsql 
 RUN docker-php-ext-install bcmath 
 RUN docker-php-ext-install gd 
 RUN docker-php-ext-install intl
@@ -66,7 +63,7 @@ ENV NVM_DIR=/home/${DEFAULT_USER}/.nvm
 RUN mkdir -p ${NVM_DIR}
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
         && . ${NVM_DIR}/nvm.sh \
-        && nvm install node \
+        && nvm install ${NODE_VERSION} \
         && nvm install --lts --latest-npm \
         && nvm use default
 

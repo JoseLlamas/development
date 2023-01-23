@@ -1,4 +1,4 @@
-docker build -t development:1.0 --no-cache --pull -f Dockerfile .
+docker build -t development:1.0 --build-arg NODE_VERSION=19.4 --build-arg DEFAULT_USER=dorian --no-cache --pull -f Dockerfile .
 
 docker run -d -p 80:80 --name development --hostname development --memory="1G" --mount type=bind,source=/home/tesla/workspace,target=/home/dorian/workspace --restart always development:1.0
 
