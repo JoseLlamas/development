@@ -1,7 +1,7 @@
 Crear archivo .env con el siguiente contenido
 ###
 WORKSPACE=/home/usuario/workspace/ 
-DEFAULT_USER=usiaro
+DEFAULT_USER=usuario
 TIME_ZONE=America/Mexico_City 
 ####
 
