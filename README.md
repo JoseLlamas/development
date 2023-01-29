@@ -1,48 +1,28 @@
-docker build -t development:1.0 --build-arg NODE_VERSION=19.4 --build-arg DEFAULT_USER=dorian --no-cache --pull -f Dockerfile .
+Crear archivo .env con el siguiente contenido
+###
+WORKSPACE=/home/usuario/workspace/ 
+DEFAULT_USER=usiaro
+TIME_ZONE=America/Mexico_City 
+####
 
-docker run -d -p 80:80 --name development --hostname development --memory="1G" --mount type=bind,source=/home/tesla/workspace,target=/home/dorian/workspace --restart always development:1.0
+para levantarlo
 
-mariadb 
+docker compose up -d
 
-docker run --detach -p 3306:3306 --name mariadb --hostname mariadb --e MARIADB_ROOT_PASSWORD=root mariadb:10
+para encender o apagar
 
-docker run --detach -p 3306:3306 --name mariadb --env MARIADB_USER=mariadb --env MARIADB_PASSWORD=mariadb --env MARIADB_ROOT_PASSWORD=root  mariadb:latest
-
-Cambiar el archivo /usr/local/etc/php.ini-development
-a
-/usr/local/etc/php/php.ini
+docker compose start
+docker compose stop
 
 install mariadb client
 
 sudo apt install mariadb-client
 
-entrar a mariadb server
-
-mariadb -h localhost -u root -proot nombredb a mariadb server
-
-mariadb -h localhost -u root -proot database_name
-
 instalar cliente universal
 
 sudo snap install dbeaver-ce #o buscar el deb en internet
 
-instalar mongodb
-
-docker run -d -p 27017:27017 --name mongodb --hostname mongodb \
-	-e MONGO_INITDB_ROOT_USERNAME=root \
-	-e MONGO_INITDB_ROOT_PASSWORD=root \
-	mongo:6.0.3
-
-Descargar e instalar Studio 3T for free desde la página
-
-Instalar postgresql
-
-docker run -d \
-	--name postgresql \
-	-e POSTGRES_PASSWORD=postgres \
-	postgres:15.1
-
-o latest
+Manejo de NVM
 
 Ver versiones de nvm de manera remota:
 
@@ -86,7 +66,7 @@ Ejemplo de virtual host
 	ServerAlias www.constanciasdejc.com
 
 	ServerAdmin abcd@gmail.com
-	DocumentRoot /home/www/html/ConstanciasDEJC/public
+	DocumentRoot /home/www/html/public
 
 	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
 	# error, crit, alert, emerg.
@@ -97,12 +77,7 @@ Ejemplo de virtual host
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-	# For most configuration files from conf-available/, which are
-	# enabled or disabled at a global level, it is possible to
-	# include a line for only one particular virtual host. For example the
-	# following line enables the CGI configuration for this host only
-	# after it has been globally disabled with "a2disconf".
-	#Include conf-available/serve-cgi-bin.conf
 </VirtualHost>
 
-no olvidar modificar el archivo /etc/hosts tanto del host como del huerped
+o olvidar modificar el archivo /etc/hosts tanto del host como del huerped
+

@@ -1,12 +1,7 @@
 FROM php:8.1-apache
 
-LABEL maintainer="Johann Hermine <nikola.tesla.130420@gmail.com>"
-ENV PHP_ERROR_REPORTING E_ALL
-
 ARG DEFAULT_USER=dorian
 ARG NODE_VERSION=19.4
-
-RUN echo 'nameserver 1.1.1.1' > /etc/resolv.conf
 
 RUN apt update 
 RUN apt install -y libicu-dev vim curl wget tzdata nano htop youtube-dl \
@@ -38,10 +33,9 @@ ENV LANG es_MX.UTF-8
 ENV LANGUAGE es_MX:es
 ENV LC_ALL es_MX.UTF-8
 
-ENV TZ UTC
 RUN a2enmod rewrite
 
-RUN echo 'root:lobo@estepario044@charlotte' | chpasswd
+RUN echo 'root:asdf1234' | chpasswd
 
 RUN groupadd -g 1000 ${DEFAULT_USER}
 RUN useradd -u 1000 -g ${DEFAULT_USER} \
@@ -49,7 +43,6 @@ RUN useradd -u 1000 -g ${DEFAULT_USER} \
     --shell=/bin/bash ${DEFAULT_USER}
 
 RUN usermod -aG www-data ${DEFAULT_USER}
-RUN echo 'dorian:lobo@estepario044@dorian' | chpasswd
 
 RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
@@ -81,5 +74,3 @@ RUN echo '<?php phpinfo();' > /var/www/html/info.php
 RUN echo '<?php include "./info.php";' > /var/www/html/index.php
 
 COPY .vimrc /home/${DEFAULT_USER}/.vimrc
-
-EXPOSE 80
