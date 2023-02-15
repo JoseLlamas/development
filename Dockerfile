@@ -4,7 +4,7 @@ ARG DEFAULT_USER=dorian
 ARG NODE_VERSION=19.4
 
 RUN apt update 
-RUN apt install -y libicu-dev vim curl wget tzdata nano htop youtube-dl \
+RUN apt install -y git libicu-dev vim curl wget tzdata nano htop youtube-dl \
 	locales less libaio1 sqlite3 p7zip-full unzip libpng-dev \
 	libmagickwand-dev libmemcached-dev zip unzip libzip-dev libreadline-dev \
 	libmcrypt-dev ffmpeg libonig-dev libcurl4 libcurl4-openssl-dev pkg-config
@@ -20,7 +20,6 @@ RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install sockets
 RUN docker-php-ext-install ctype
-RUN docker-php-ext-install soap
 RUN docker-php-ext-install xml
 
 RUN dpkg-reconfigure --frontend noninteractive tzdata
