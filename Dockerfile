@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:8.0-apache
 
 ARG DEFAULT_USER=dorian
 ARG NODE_VERSION=19.4
@@ -58,11 +58,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
         && nvm install ${NODE_VERSION} \
         && nvm install --lts --latest-npm \
         && nvm use default
-
-RUN curl -fsSL https://deno.land/x/install/install.sh | sh
-
-ENV DENO_INSTALL /home/${DEFAULT_USER}/.deno
-ENV PATH ${DENO_INSTALL}/bin:$PATH
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
 
