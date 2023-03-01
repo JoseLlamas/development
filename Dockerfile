@@ -1,7 +1,7 @@
 FROM php:8.0-apache
 
 ARG DEFAULT_USER=dorian
-ARG NODE_VERSION=19.4
+ARG NODE_VERSION=19.7
 
 RUN apt update 
 RUN apt install -y git libicu-dev vim curl wget tzdata nano htop youtube-dl \
@@ -57,7 +57,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
         && . ${NVM_DIR}/nvm.sh \
         && nvm install ${NODE_VERSION} \
         && nvm install --lts --latest-npm \
-        && nvm use default
+        && nvm use --lts
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
 
