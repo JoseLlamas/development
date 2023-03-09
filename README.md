@@ -1,8 +1,9 @@
 Crear archivo .env con el siguiente contenido
 ###
-WORKSPACE=/home/usuario/workspace/ 
-DEFAULT_USER=usuario
-TIME_ZONE=America/Mexico_City 
+WORKSPACE=/home/tesla/workspace/
+DEFAULT_USER=dorian
+TIME_ZONE=America/Mexico_City
+NODE_VERSION=19.7
 ####
 
 para levantarlo
