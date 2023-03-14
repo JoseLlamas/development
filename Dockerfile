@@ -55,12 +55,10 @@ ENV NVM_DIR=/home/${DEFAULT_USER}/.nvm
 RUN mkdir -p ${NVM_DIR}
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
         && . ${NVM_DIR}/nvm.sh && nvm install ${NODE_VERSION} && nvm install node && nvm install \
-        --lts --latest-npm && nvm use default --lts
+        --lts --latest-npm && nvm install lts/hydrogen && nvm alias default lts/hydrogen && nvm use \
+        default
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
-
-RUN /home/${DEFAULT_USER}/bin/composer global require laravel/installer
-RUN ln -s /home/${DEFAULT_USER}/.composer/vendor/bin/laravel /home/${DEFAULT_USER}/bin
 
 RUN echo '<?php phpinfo();' > /var/www/html/info.php
 RUN echo '<?php include "./info.php";' > /var/www/html/index.php
