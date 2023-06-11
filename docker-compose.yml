@@ -16,7 +16,7 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     ports:
-      - "10000:80"
+      - "80:80"
     hostname: "development"
     volumes: 
       - type: bind
@@ -30,6 +30,8 @@ services:
       TZ: ${TIME_ZONE:-UTC}
   mariadb:
     image: "mariadb:10"
+    ports:
+      - "3306:3306"
     networks:
       my-network:
         ipv4_address: 172.18.0.11
@@ -39,6 +41,8 @@ services:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
   mongodb:
     image: mongo
+    ports:
+      - "27017:27017"
     networks:
       my-network:
         ipv4_address: 172.18.0.12
