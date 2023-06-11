@@ -55,7 +55,7 @@ ENV NVM_DIR=/home/${DEFAULT_USER}/.nvm
 RUN mkdir -p ${NVM_DIR}
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
         && . ${NVM_DIR}/nvm.sh && nvm install ${NODE_VERSION} && nvm install node && nvm install \
-        --lts --latest-npm && nvm install lts/hydrogen && nvm alias default lts/hydrogen && nvm use \
+        --lts --latest-npm && nvm install lts/hydrogen && nvm alias default ${NODE_VERSION} && nvm use \
         default
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer

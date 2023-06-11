@@ -2,26 +2,23 @@ Crear archivo .env con el siguiente contenido
 ###
 WORKSPACE=/home/tesla/workspace/
 DEFAULT_USER=dorian
-TIME_ZONE=America/Mexico_City
-NODE_VERSION=19.7
+TIME_ZONE=UTC
+NODE_VERSION=20.3
 ####
 
-para levantarlo
+limpiar cache docker
+
+docker builder prune
+
+instalar
+
+docker compose build --no-cache --pull
+
+levantar
 
 docker compose up -d
 
 para encender o apagar
-
-docker compose start
-docker compose stop
-
-install mariadb client
-
-sudo apt install mariadb-client
-
-instalar cliente universal
-
-sudo snap install dbeaver-ce #o buscar el deb en internet
 
 Manejo de NVM
 

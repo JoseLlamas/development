@@ -16,7 +16,7 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     ports:
-      - "80:80"
+      - "10000:80"
     hostname: "development"
     volumes: 
       - type: bind
@@ -25,7 +25,6 @@ services:
     depends_on:
       - mariadb
       - mongodb
-      - redis
     environment:
       PHP_ERROR_REPORTING: E_ALL
       TZ: ${TIME_ZONE:-UTC}
@@ -34,8 +33,6 @@ services:
     networks:
       my-network:
         ipv4_address: 172.18.0.11
-    ports:
-      - "3306:3306"
     hostname: mariadb
     environment:
       TZ: ${TIME_ZONE:-UTC}
@@ -45,22 +42,11 @@ services:
     networks:
       my-network:
         ipv4_address: 172.18.0.12
-    ports:
-      - "27017:27017"
     hostname: mongodb 
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
-  redis:
-    image: redis
-    ports:
-      - "6379:6379"
-    networks:
-      my-network:
-        ipv4_address: 172.18.0.13
-    environment:
-      TZ: ${TIME_ZONE:-UTC}
 networks:
   my-network:
     ipam:
