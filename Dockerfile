@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM httpd:2.4
 
 ARG DEFAULT_USER
 ARG NODE_VERSION
@@ -8,19 +8,6 @@ RUN apt install -y git libicu-dev vim curl wget tzdata nano htop youtube-dl \
 	locales less libaio1 sqlite3 p7zip-full unzip libpng-dev \
 	libmagickwand-dev libmemcached-dev zip unzip libzip-dev libreadline-dev \
 	libmcrypt-dev ffmpeg libonig-dev libcurl4 libcurl4-openssl-dev pkg-config
-
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install mysqli 
-RUN docker-php-ext-install pdo_mysql 
-RUN docker-php-ext-install bcmath 
-RUN docker-php-ext-install gd 
-RUN docker-php-ext-install intl
-RUN docker-php-ext-install iconv
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install curl
-RUN docker-php-ext-install sockets
-RUN docker-php-ext-install ctype
-RUN docker-php-ext-install xml
 
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt autoclean
@@ -32,8 +19,6 @@ ENV LANG es_MX.UTF-8
 ENV LANGUAGE es_MX:es
 ENV LC_ALL es_MX.UTF-8
 
-RUN a2enmod rewrite
-
 RUN echo 'root:asdf1234' | chpasswd
 
 RUN groupadd -g 1000 ${DEFAULT_USER}
@@ -42,8 +27,6 @@ RUN useradd -u 1000 -g ${DEFAULT_USER} \
     --shell=/bin/bash ${DEFAULT_USER}
 
 RUN usermod -aG www-data ${DEFAULT_USER}
-
-RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 USER ${DEFAULT_USER}
 WORKDIR /home/${DEFAULT_USER}
@@ -58,9 +41,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
         --lts --latest-npm && nvm install lts/hydrogen && nvm alias default ${NODE_VERSION} && nvm use \
         default
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
-
-RUN echo '<?php phpinfo();' > /var/www/html/info.php
-RUN echo '<?php include "./info.php";' > /var/www/html/index.php
-
 COPY .vimrc /home/${DEFAULT_USER}/.vimrc
+
+USER root
