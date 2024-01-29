@@ -41,6 +41,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
         --lts --latest-npm && nvm install lts/hydrogen && nvm alias default ${NODE_VERSION} && nvm use \
         default
 
+RUN curl -fsSL https://bun.sh/install | bash
+
 COPY .vimrc /home/${DEFAULT_USER}/.vimrc
 
 USER root

@@ -5,7 +5,7 @@ services:
       context: .
       args:
         DEFAULT_USER: ${DEFAULT_USER:?}
-        NODE_VERSION: ${NODE_VERSION:?}
+        NODE_VERSION: ${NODE_VERSION:-node}
     container_name: development
     image: development
     networks:
