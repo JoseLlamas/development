@@ -5,18 +5,15 @@ services:
       context: .
       args:
         DEFAULT_USER: ${DEFAULT_USER:?}
-        NODE_VERSION: ${NODE_VERSION:-node}
     container_name: development
     image: development
     networks:
       my-network:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.18.0.9
     dns:
       - 1.1.1.1
       - 8.8.8.8
       - 8.8.4.4
-    ports:
-      - "80:80"
     hostname: "development"
     volumes: 
       - type: bind
@@ -25,9 +22,16 @@ services:
     depends_on:
       - mariadb
       - mongodb
+      - nginx
     environment:
-      PHP_ERROR_REPORTING: E_ALL
       TZ: ${TIME_ZONE:-UTC}
+  nginx:
+    image: "nginx:stable"
+    ports:
+      - "80:80"
+    networks:
+      my-network:
+        ipv4_address: 172.18.0.10
   mariadb:
     image: "mariadb:10"
     ports:
