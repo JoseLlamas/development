@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM debian:latest
 
 ARG DEFAULT_USER
 
@@ -27,7 +27,7 @@ RUN usermod -aG www-data ${DEFAULT_USER}
 USER ${DEFAULT_USER}
 WORKDIR /home/${DEFAULT_USER}
 
-RUN curl -L https://get.pnpm.io/install.sh | bash
+RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
 
 RUN mkdir bin
 ENV PATH $PATH:/home/${DEFAULT_USER}/bin

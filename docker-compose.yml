@@ -8,13 +8,8 @@ services:
     container_name: development
     image: development
     networks:
-      my-network:
-        ipv4_address: 172.18.0.9
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
-      - 8.8.4.4
-    hostname: "development"
+      my-net:
+    hostname: "development.acme.com"
     volumes: 
       - type: bind
         source: ${WORKSPACE:?}
@@ -30,16 +25,15 @@ services:
     ports:
       - "80:80"
     networks:
-      my-network:
-        ipv4_address: 172.18.0.10
+      my-net:
+    hostname: "development.nginx.acme.com"
   mariadb:
     image: "mariadb:10"
     ports:
       - "3306:3306"
     networks:
-      my-network:
-        ipv4_address: 172.18.0.11
-    hostname: mariadb
+      my-net:
+    hostname: "development.mariadb.acme.com"
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
@@ -48,15 +42,12 @@ services:
     ports:
       - "27017:27017"
     networks:
-      my-network:
-        ipv4_address: 172.18.0.12
-    hostname: mongodb 
+      my-net:
+    hostname: "development.mongodb.acme.com" 
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
 networks:
-  my-network:
-    ipam:
-      config:
-        - subnet: 172.18.0.0/24
+  my-net:
+    external: true
