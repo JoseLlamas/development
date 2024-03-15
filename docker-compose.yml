@@ -9,7 +9,7 @@ services:
     image: development
     networks:
       my-net:
-    hostname: "development.acme.com"
+    hostname: "development.local"
     volumes: 
       - type: bind
         source: ${WORKSPACE:?}
@@ -26,14 +26,14 @@ services:
       - "80:80"
     networks:
       my-net:
-    hostname: "development-nginx.acme.com"
+    hostname: "development-nginx.local"
   mariadb:
     image: "mariadb:10"
     ports:
       - "3306:3306"
     networks:
       my-net:
-    hostname: "development-mariadb.acme.com"
+    hostname: "development-mariadb.local"
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
@@ -43,7 +43,7 @@ services:
       - "27017:27017"
     networks:
       my-net:
-    hostname: "development-mongodb.acme.com" 
+    hostname: "development-mongodb.local" 
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
