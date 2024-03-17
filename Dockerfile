@@ -3,7 +3,7 @@ FROM debian:latest
 ARG DEFAULT_USER
 
 RUN apt update && apt upgrade -y && apt install -y libicu-dev vim curl wget tzdata \
-	locales less sqlite3
+	locales less sqlite3 libzip-dev
 
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt autoclean && apt autoremove
