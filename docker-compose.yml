@@ -20,6 +20,8 @@ services:
       my-net:
         ipv4_address: 172.18.0.3
     hostname: "development.local"
+    ports:
+      - "5173:5173"
     volumes: 
       - type: bind
         source: ${WORKSPACE:?}
