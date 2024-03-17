@@ -1,5 +1,14 @@
 version: "3.9"
 services:
+  nginx:
+    image: "nginx:stable"
+    ports:
+      - "80:80"
+    networks:
+      my-net:
+        ipv4_address: 172.18.0.2
+    hostname: development-nginx.local
+    container_name: development-nginx
   development:
     build: 
       context: .
@@ -9,6 +18,7 @@ services:
     image: development
     networks:
       my-net:
+        ipv4_address: 172.18.0.3
     hostname: "development.local"
     volumes: 
       - type: bind
@@ -20,34 +30,31 @@ services:
       - nginx
     environment:
       TZ: ${TIME_ZONE:-UTC}
-  nginx:
-    image: "nginx:stable"
-    ports:
-      - "80:80"
-    networks:
-      my-net:
-    hostname: "development-nginx.local"
   mariadb:
     image: "mariadb:10"
     ports:
       - "3306:3306"
     networks:
       my-net:
+        ipv4_address: 172.18.0.4
     hostname: "development-mariadb.local"
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
+    container_name: development-mariadb
   mongodb:
     image: mongo
     ports:
       - "27017:27017"
     networks:
       my-net:
+        ipv4_address: 172.18.0.5
     hostname: "development-mongodb.local" 
     environment:
       TZ: ${TIME_ZONE:-UTC}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
+    container_name: development-mongodb
 networks:
   my-net:
     external: true
