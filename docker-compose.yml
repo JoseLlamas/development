@@ -20,8 +20,6 @@ services:
       my-net:
         ipv4_address: 172.18.0.3
     hostname: "development.local"
-    ports:
-      - "5173:5173"
     volumes: 
       - type: bind
         source: ${WORKSPACE:?}
@@ -57,6 +55,19 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
     container_name: development-mongodb
+  postgresql:
+    image: "postgres"
+    shm_size: "128mb"
+    environment:
+      TZ: ${TIME_ZONE:-UTC}
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      my-net:
+        ipv4_address: 172.18.0.6
+    hostname: "development-postgresql.local"
+    container_name: development-postgresql
 networks:
   my-net:
     external: true
