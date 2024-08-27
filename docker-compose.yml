@@ -41,19 +41,6 @@ services:
       TZ: ${TIME_ZONE:-UTC}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
     container_name: development-mariadb
-  mongodb:
-    image: mongo
-    ports:
-      - "27017:27017"
-    networks:
-      my-net:
-        ipv4_address: 172.18.0.5
-    hostname: "development-mongodb.local" 
-    environment:
-      TZ: ${TIME_ZONE:-UTC}
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
-    container_name: development-mongodb
   postgresql:
     image: "postgres"
     shm_size: "128mb"
