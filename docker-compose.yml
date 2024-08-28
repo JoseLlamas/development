@@ -25,6 +25,7 @@ services:
         target: /home/${DEFAULT_USER:?}/workspace
     depends_on:
       - mariadb
+      - mongodb
       - nginx
     environment:
       TZ: ${TIME_ZONE:-UTC}
