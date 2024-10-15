@@ -1,10 +1,13 @@
-FROM debian:latest
+FROM php:8.2-apache
 
 ARG DEFAULT_USER
 ENV JAVA_HOME=/usr/lib/jvm/jdk-22-oracle-x64/
 
 RUN apt update && apt upgrade -y && apt install libicu-dev vim curl wget tzdata \
-	locales less sqlite3 libzip-dev git -y
+	locales less sqlite3 libzip-dev git libpq-dev -y
+
+RUN docker-php-ext-install mysqli
+RUN  docker-php-ext-install pgsql
 
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt autoclean && apt autoremove
@@ -46,5 +49,3 @@ RUN mkdir bin
 ENV PATH $PATH:/home/${DEFAULT_USER}/bin
 
 COPY .vimrc /home/${DEFAULT_USER}/.vimrc
-
-CMD ["tail", "-F", "/tmp/no_existe"]
