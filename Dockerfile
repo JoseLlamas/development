@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM debian:latest
 
 ARG DEFAULT_USER
 ENV JAVA_HOME=/usr/lib/jvm/jdk-22-oracle-x64/
@@ -6,23 +6,12 @@ ENV JAVA_HOME=/usr/lib/jvm/jdk-22-oracle-x64/
 RUN apt update && apt upgrade -y && apt install libicu-dev vim curl wget tzdata \
 	locales less sqlite3 libzip-dev git libpq-dev -y
 
-RUN docker-php-ext-install mysqli
-RUN  docker-php-ext-install pgsql
-
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt autoclean && apt autoremove
 
 RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O "https://download.oracle.com/java/22/archive/jdk-22.0.1_linux-x64_bin.deb"
 RUN dpkg -i jdk-22.0.1_linux-x64_bin.deb
 RUN rm jdk-22.0.1_linux-x64_bin.deb
-
-RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O "https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb"
-RUN dpkg -i jdk-21_linux-x64_bin.deb
-RUN rm jdk-21_linux-x64_bin.deb
-
-RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O "https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb"
-RUN dpkg -i jdk-17_linux-x64_bin.deb
-RUN rm jdk-17_linux-x64_bin.deb
 
 RUN sed -i -e 's/# es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/' /etc/locale.gen
 RUN sed -i -e 's/# es_MX.ISO-8859-1/es_MX.ISO-8859-1 ISO-8859-1/' /etc/locale.gen
@@ -49,3 +38,6 @@ RUN mkdir bin
 ENV PATH $PATH:/home/${DEFAULT_USER}/bin
 
 COPY .vimrc /home/${DEFAULT_USER}/.vimrc
+
+CMD tail -F /var/log/noExists
+

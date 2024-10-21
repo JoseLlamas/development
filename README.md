@@ -4,6 +4,9 @@ WORKSPACE=/home/tesla/workspace/
 DEFAULT_USER=dorian
 TIME_ZONE=UTC
 ####
+crear red
+
+docker network create --driver=bridge --subnet=172.18.0.0/16 my-ne--driver=bridge --subnet=172.18.0.0/24 my-nett
 
 instalar
 
