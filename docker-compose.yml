@@ -2,29 +2,12 @@ services:
   nginx:
     image: "nginx:stable"
     ports:
-      - "81:80"
+      - "80:80"
     networks:
-      my-net:
-        ipv4_address: 172.18.0.2
+      development:
+        ipv4_address: 172.18.1.2
     hostname: development-nginx.local
     container_name: development-nginx
-  phpapache:
-    build:
-      context: .
-      dockerfile: Dockerfile_phpapache
-    networks:
-      my-net:
-        ipv4_address: 172.18.0.3
-    hostname: development-phpapache.local
-    container_name: development-phpapache
-    ports:
-      - "80:80"
-    environment:
-      TZ: ${TIME_ZONE:-UTC}
-    volumes: 
-      - type: bind
-        source: ${WORKSPACE:?}
-        target: /workspace
   development:
     build: 
       context: .
@@ -33,8 +16,8 @@ services:
     container_name: development
     image: development
     networks:
-      my-net:
-        ipv4_address: 172.18.0.4
+      development:
+        ipv4_address: 172.18.1.3
     hostname: "development.local"
     volumes: 
       - type: bind
@@ -44,7 +27,6 @@ services:
       - mariadb
       - mongodb
       - nginx
-      - phpapache
     environment:
       TZ: ${TIME_ZONE:-UTC}
   mariadb:
@@ -52,8 +34,8 @@ services:
     ports:
       - "3306:3306"
     networks:
-      my-net:
-        ipv4_address: 172.18.0.5
+      development:
+        ipv4_address: 172.18.1.4
     hostname: "development-mariadb.local"
     environment:
       TZ: ${TIME_ZONE:-UTC}
@@ -64,8 +46,8 @@ services:
     ports:
       - "27017:27017"
     networks:
-      my-net:
-        ipv4_address: 172.18.0.6
+      development:
+        ipv4_address: 172.18.1.5
     hostname: "development-mongodb.local" 
     environment:
       TZ: ${TIME_ZONE:-UTC}
@@ -81,10 +63,10 @@ services:
     ports:
       - "5432:5432"
     networks:
-      my-net:
-        ipv4_address: 172.18.0.7
+      development:
+        ipv4_address: 172.18.1.6
     hostname: "development-postgresql.local"
     container_name: development-postgresql
 networks:
-  my-net:
+  development:
     external: true

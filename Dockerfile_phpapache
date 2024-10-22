@@ -1,5 +1,0 @@
-FROM php:8.2-apache
-
-RUN apt update && apt upgrade && apt install libicu-dev vim curl wget tzdata locales less sqlite3 libzip-dev git libpq-dev -y
-RUN docker-php-ext-install mysqli 
-RUN docker-php-ext-install pgsql
