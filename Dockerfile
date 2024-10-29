@@ -4,7 +4,7 @@ ARG DEFAULT_USER
 ENV JAVA_HOME=/usr/lib/jvm/jdk-22-oracle-x64/
 
 RUN apt update && apt upgrade -y && apt install libicu-dev vim curl wget tzdata \
-	locales less sqlite3 libzip-dev git libpq-dev -y
+	locales less sqlite3 libzip-dev git libpq-dev unzip -y
 
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt autoclean && apt autoremove
@@ -33,6 +33,7 @@ USER ${DEFAULT_USER}
 WORKDIR /home/${DEFAULT_USER}
 
 RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+RUN curl -fsSL https://bun.sh/install | bash
 
 RUN mkdir bin
 ENV PATH $PATH:/home/${DEFAULT_USER}/bin
