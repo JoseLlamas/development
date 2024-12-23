@@ -6,7 +6,7 @@ TIME_ZONE=UTC
 ####
 crear red
 
-docker network create --driver=bridge --subnet=172.18.1.0/24 development
+docker network create --driver=bridge --subnet=172.18.1.0/29 development
 
 instalar
 
