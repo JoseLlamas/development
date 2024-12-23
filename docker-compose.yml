@@ -43,6 +43,8 @@ services:
       TZ: ${TIME_ZONE:-UTC}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
     container_name: development-mariadb
+    volumes:
+      - development-mariadb:/var/lib/mysql
   mongodb:
     image: mongo
     ports:
@@ -55,6 +57,11 @@ services:
       TZ: ${TIME_ZONE:-UTC}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
+    volumes:
+      - development-mongodb:/data/db
 networks:
   development:
     external: true
+volumes:
+  development-mariadb:
+  development-mongodb:
